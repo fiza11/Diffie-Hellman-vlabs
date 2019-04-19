@@ -71,20 +71,26 @@ def calg(g,x,p):
 
 InputFile = sys.argv[1]
 OutputFile = sys.argv[2]
-IN = open(InputFile, 'r')
-for testcases in IN:
-    testcase=testcases.strip()
-    List = testcase.split(' ')
-    p,g,a,b = [List[i] for i in (0,1,2,3)]
+testcasecount = 0
+f=open(InputFile,"r")
+for x in f:
+    testcasecount=testcasecount+1
+    print("\n#TEST CASE "+ str(testcasecount))
+    a=x.split()
+    p,g,a,b = [ long(a[value]) for value in range(4)]
+    Ga = calg(g,a,p)
+    print("Ga = " + str(Ga))
+    Gb = calg(g,b,p)
+    print("Gb = " + str(Gb))
+    Gab = calg(Gb,a,p)
+    print("Gab = " + str(Gab))
+    Gba = calg(Ga,b,p)
+    print("Gba = " + str(Gba))
+    print("Gab = " + str(Gab) + " and Gba = "  + str(Gba))
 
-    Ga = calg(int(g),int(a),int(p))
-    Gb = calg(int(g),int(b),int(p))
+    with open(OutputFile, 'a' ) as Output:
+        Answer = str("\nAlice's secret key (Gab): " + str(Gab) + " and " + "Bob's secret key (Gba): " + str(Gba)+ "\n")
+        Answer += str("As both of them match, a Diffie Hellman Key was successfully established!\n\n")
+        Output.write(Answer)
 
-    Gab = calg(int(Gb),int(a),int(p))
-    Gba = calg(int(Ga),int(b),int(p))
-    print(str(Gab) + "   "  + str(Gba) + "\n")
-# with open(OutputFile, 'w' ) as Output:
-#
-#     Answer = str("Alice's secret key (Gab): " + str(Gab) + " and " + "Bob's secret key (Gba): " + str(Gba)+ "\n")
-#     Answer += str("As both of them match, a Diffie Hellman Key was successfully established!\n\n")
-#     Output.write(Answer)
+    print("\n")
