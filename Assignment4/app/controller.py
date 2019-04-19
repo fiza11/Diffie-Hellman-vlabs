@@ -107,3 +107,7 @@ def addAnswers():
     db.session.add(Answer)
     db.session.commit()
     return jsonify(stat=true)
+@main.route('/answers', methods = ['GET'])
+def getall():
+    new = Quiz.query.all()
+    return jsonify(sentence=[curr.id for curr in new], q1=[curr.ans_q1 for curr in new], q2=[curr.ans_q2 for curr in new], q3=[curr.ans_q3 for curr in new], q4=[curr.ans_q4 for curr in new], date=[curr.date_time for curr in new])	
